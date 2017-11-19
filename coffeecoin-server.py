@@ -1,7 +1,6 @@
 from flask import Flask
 from flask import request
 import json
-# import requests
 import hashlib as hasher
 import datetime as date
 node = Flask(__name__)
@@ -61,10 +60,10 @@ def transaction():
   # Then we let the client know it worked out
   return "Transaction submission successful\n"
 
+# Internal Blocks Method
 @node.route('/blocks', methods=['GET'])
 def get_blocks():
   chain_to_send = blockchain
-  blocklist = ""
   for i in range(len(chain_to_send)):
     block = chain_to_send[i]
     block_index = str(block.index)
@@ -77,6 +76,28 @@ def get_blocks():
     "data": block_data,
     "hash": block_hash
     })
+    if blocklist == "":
+      blocklist = assembled
+    else:
+      blocklist =  blocklist + assembled
+  return blocklist
+
+#External Blocks Method
+@node.route('/print_block', methods=['GET'])
+def print_blocks():
+  chain_to_send = blockchain
+  blocklist = ""
+  for i in range(len(chain_to_send)):
+    block = chain_to_send[i]
+    block_index = str(block.index)
+    block_timestamp = str(block.timestamp)
+    block_data = str(block.data)
+    block_hash = block.hash
+    assembled = json.dumps({
+    "index": block_index,
+    "timestamp": block_timestamp,
+    "data": block_data,
+    "hash": block_hash}, sort_keys=False, indent=4)
     if blocklist == "":
       blocklist = assembled
     else:
