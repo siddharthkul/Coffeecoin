@@ -67,7 +67,7 @@ def diff_level(peer_nodes):
 		known_cpu = tot_cpu
 
 	# In the case where CPU and GPU have halved
-	else if (tot_gpu + tot_cpu < 2*(known_gpu + known_cpu)
+	if (tot_gpu + tot_cpu < 2*(known_gpu + known_cpu)
 		difficulty_level--
 		known_gpu = tot_gpu
 		known_cpu = tot_cpu
