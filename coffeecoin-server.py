@@ -5,6 +5,10 @@ node = Flask(__name__)
 from Block import *
 from coffee_functions import *
 
+# This is the main file for Coffee Coin Experimentation
+# Originally adapted from [https://gist.github.com/aunyks/47d157f8bc7d1829a729c2a6a919c173]
+# Authored by Siddharth Kulkarni and Sharan Duggirala November 18th, 2017
+
 # A completely random address of the owner of this node
 miner_address = "q3nf394hjg-random-miner-address-34nf3i4nflkn3oi"
 # This node's blockchain copy
