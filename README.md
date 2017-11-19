@@ -1,4 +1,4 @@
-# CoffeCoin
+# Coffee Coin
 
 Energy Efficient Blockchain miner built by Sharan Duggirala and Siddharth Kulkarni of the Department of Computer Science in San Jose State University. This is technically a branch of the code from https://gist.github.com/aunyks/47d157f8bc7d1829a729c2a6a919c173. 
 
