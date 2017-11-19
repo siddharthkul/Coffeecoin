@@ -15,6 +15,7 @@ def find_new_chains(peer_nodes):
   return other_chains
 
 def consensus(blockchain, peer_nodes):
+  #print "Consensus called! \n"
   # Get the blocks from other nodes
   other_chains = find_new_chains(peer_nodes)
   # If our chain isn't longest,
