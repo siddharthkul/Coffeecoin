@@ -14,8 +14,9 @@ def find_new_chains(peer_nodes):
     other_chains.append(block)
   return other_chains
 
+# For use on single node system
 def consensus(blockchain, peer_nodes):
-  #print "Consensus called! \n"
+  print "Consensus called!"
   # Get the blocks from other nodes
   other_chains = find_new_chains(peer_nodes)
   # If our chain isn't longest,
@@ -28,6 +29,28 @@ def consensus(blockchain, peer_nodes):
   # then we stop mining and set
   # our chain to the longest one
   blockchain = longest_chain
+
+'''
+# To be tested on multi-node system
+def consensus(blockchain, peer_nodes):
+  bool fraud
+  # Get the blocks from other nodes
+  other_chains = find_new_chains(peer_nodes)
+  # Get current blockchain
+  current_chain = blockchain
+  for chain in other_chains:
+    fraud = false
+    if(len(current_chain) < len(chain)):
+      for i in range(len(chain)):
+        if(current_chain[i].hash != chain[i].hash):
+            print "Fraudalence Detected"
+            fraud = true
+        if(fraud):
+          break
+      if(!fraud):
+        current_chain = chain
+  blockchain = current_chain
+  '''
 
 def proof_of_work(last_proof):
   # Create a variable that we will use to find
