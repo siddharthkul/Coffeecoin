@@ -6,7 +6,7 @@ import hashlib as hasher
 import datetime as date
 node = Flask(__name__)
 
-# Define what a Snakecoin block is
+# Define what a Coffeecoin block is
 class Block:
   def __init__(self, index, timestamp, data, previous_hash):
     self.index = index
