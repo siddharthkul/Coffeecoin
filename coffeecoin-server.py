@@ -64,22 +64,24 @@ def transaction():
 @node.route('/blocks', methods=['GET'])
 def get_blocks():
   chain_to_send = blockchain
-  # Convert our blocks into dictionaries
-  # so we can send them as json objects later
+  blocklist = ""
   for i in range(len(chain_to_send)):
     block = chain_to_send[i]
     block_index = str(block.index)
     block_timestamp = str(block.timestamp)
     block_data = str(block.data)
     block_hash = block.hash
-    chain_to_send[i] = {
-      "index": block_index,
-      "timestamp": block_timestamp,
-      "data": block_data,
-      "hash": block_hash
-    }
-  chain_to_send = json.dumps(chain_to_send)
-  return chain_to_send
+    assembled = json.dumps({
+    "index": block_index,
+    "timestamp": block_timestamp,
+    "data": block_data,
+    "hash": block_hash
+    })
+    if blocklist == "":
+      blocklist = assembled
+    else:
+      blocklist =  blocklist + assembled
+  return blocklist
 
 def find_new_chains():
   # Get the blockchains of every
