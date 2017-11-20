@@ -45,7 +45,7 @@ def transaction():
   return "Transaction submission successful\n"
 
 # New Miner Method
-@node.route('/mine2', methods=['POST'])
+@node.route('/mine', methods=['POST'])
 def mine2():
   informationMiner = request.get_json()
   miner_information_dict[informationMiner['miner_address']] = informationMiner
@@ -142,7 +142,7 @@ def print_blocks():
       blocklist =  blocklist + assembled
   return blocklist
 
-@node.route('/mine', methods = ['GET'])
+@node.route('/mine2', methods = ['GET'])
 def mine():
   if(len(this_nodes_transactions) != 0):
     # Get the last proof of work

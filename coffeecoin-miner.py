@@ -20,7 +20,7 @@ miner = Miner(
 
 try:
     while True:
-        req = urllib2.Request("http://localhost:5000/mine2", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : miner.miner_coins_earned , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu }), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
+        req = urllib2.Request("http://localhost:5000/mine", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : miner.miner_coins_earned , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu }), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
         response = urllib2.urlopen(req)
         the_page = response.read()
         if(the_page != "Try Again"):
