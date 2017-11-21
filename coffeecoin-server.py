@@ -45,7 +45,7 @@ shaAns = hashlib.sha256()
 
 # New Miner Method
 @node.route('/mine', methods=['POST'])
-def mine2():
+def mine():
   informationMiner = request.get_json()
   # Debugging
   miner_information_dict[informationMiner['miner_address']] = informationMiner
