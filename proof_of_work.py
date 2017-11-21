@@ -6,6 +6,7 @@
 import hashlib 
 import random
 import string
+import json
 
 difficulty_level = 1
 known_cpu = 0
@@ -13,23 +14,21 @@ known_gpu = 0
 
 # Function to Initialize the Challenge String
 def init_challenge(peer_nodes):
+
+	# There is not point if the Server has not detected any nodes as 
+	# of now 
+	if (len(peer_nodes) == 0): 
+		return
 	
+	tot_gpu = 0
+	tot_cpu = 0
 	# Need to initialize the Known CPU and GPU values to start with 
-	for i in range(len(peer_nodes)):
-		tot_gpu += peer_nodes[i].miner_gpu
-		tot_cpu += peer_nodes[i].miner_cpu
+	for key in peer_nodes:
+		tot_gpu += peer_nodes[key].miner_gpu
+		tot_cpu += peer_nodes[key].miner_cpu
 	if (tot_gpu + tot_cpu > known_gpu + known_cpu):
 		known_gpu = tot_gpu
 		known_cpu = tot_cpu
-
-	challenge = '0'
-
-	# Generate the 16 byte string that will function as the target
-	answer = ''.join(random.choice(string.ascii_lowercase +
-									string.ascii_uppercase +
-									string.digits) for x in range(15))
-
-	return challenge+=answer, difficulty_level
 
 # Function to refresh the Challenge String
 def refresh_challenge(peer_nodes): 
@@ -47,31 +46,43 @@ def refresh_challenge(peer_nodes):
 	answer = ''.join(random.choice(string.ascii_lowercase +
 									string.ascii_uppercase +
 									string.digits) 
-									for x in range(16-difficulty_level))
+									for _ in range(4-difficulty_level))
 
-	return challenge+=answer, difficulty_level
+	challenge+=answer
+	return challenge, difficulty_level
 
 
-# Calculate the Total GPU  and CPU utilazation and double every time
+# Calculate the Total GPU  and CPU utilazation and change the value of 
+# of the difficulty level
 def diff_level(peer_nodes):
 
-	# Need to Discover the new CPU and GPU values to start with 
-	for i in range(len(peer_nodes)):
-		tot_gpu += peer_nodes[i].miner_gpu
-		tot_cpu += peer_nodes[i].miner_cpu
+	# There is not point if the Server has not detected any nodes as 
+	# of now 
+	if (len(peer_nodes) == 0) : 
+		return
 
-	#In the case where the CPU and GPU has doubled 
-	if (tot_gpu + tot_cpu > 2*(known_gpu + known_cpu):
-		difficulty_level++
-		known_gpu = tot_gpu
-		known_cpu = tot_cpu
+	else:  
+		tot_gpu = 0
+		tot_cpu = 0
+		# Need to Discover the new CPU and GPU values to start with 
+		for key in peer_nodes:
+			tot_gpu += peer_nodes[key]['miner_gpu']
+			tot_cpu += peer_nodes[key]['miner_cpu']
 
-	# In the case where CPU and GPU have halved
-	if (tot_gpu + tot_cpu < 2*(known_gpu + known_cpu)
-		difficulty_level--
-		known_gpu = tot_gpu
-		known_cpu = tot_cpu
+		#In the case where the CPU and GPU has doubled 
+		
+		if (tot_gpu + tot_cpu > 2*(known_gpu + known_cpu)):
+			global known_gpu
+			global known_cpu
+			difficulty_level+=1
+			known_gpu = tot_gpu
+			known_cpu = tot_cpu
 
-	# If neither of these cases are true, just stay as is
+		# In the case where CPU and GPU have halved
+		if (tot_gpu + tot_cpu < 2*(known_gpu + known_cpu)):
+			difficulty_level-=1
+			known_gpu = tot_gpu
+			known_cpu = tot_cpu
 
+		# If neither of these cases are true, just stay as is
 

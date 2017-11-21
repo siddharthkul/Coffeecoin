@@ -4,6 +4,9 @@ import json
 node = Flask(__name__)
 from Block import *
 from coffee_functions import *
+from proof_of_work import * 
+import random
+import hashlib
 
 # This is the main file for Coffee Coin Experimentation
 # Originally adapted from [https://gist.github.com/aunyks/47d157f8bc7d1829a729c2a6a919c173]
@@ -17,13 +20,6 @@ blockchain.append(create_genesis_block())
 # Store the transactions that
 # this node has in a list
 this_nodes_transactions = []
-# Store the url data of every
-# other node in the network
-# so that we can communicate
-# with them
-peer_nodes = []
-# A variable to deciding if we're mining or not
-mining = True
 
 # Dictionary of Miner Information
 miner_information_dict = {}
@@ -44,21 +40,47 @@ def transaction():
   # Then we let the client know it worked out
   return "Transaction submission successful\n"
 
+shaCha = hashlib.sha256()
+shaAns = hashlib.sha256()
+
 # New Miner Method
 @node.route('/mine', methods=['POST'])
 def mine2():
   informationMiner = request.get_json()
+  # Debugging
   miner_information_dict[informationMiner['miner_address']] = informationMiner
   #print miner_information_dict
   if(len(this_nodes_transactions) != 0):
-    # Get the last proof of work
+    # First find the Challenge
+    # Not really using the difficulty level here at all, but leaving it for 
+    # debugging and future use! 
+    [challenge, d_level] = refresh_challenge(miner_information_dict)
+
+    # Give Blockchain Data
     last_block = blockchain[len(blockchain) - 1]
-    last_proof = last_block.data['proof-of-work']
-    # Find the proof of work for
-    # the current block being mined
-    # Note: The program will hang here until a new
-    #       proof of work is found
-    proof = proof_of_work(last_proof)
+
+    # Not Doing Hashes for Demos since Mining takes too long
+    # shaCha.update(challenge)
+    # challenge = shaCha.hexdigest()
+
+    # Now we can attempt to find the solution
+    found = False
+
+    while found == False : 
+      answer = ''.join(random.choice(string.ascii_lowercase +
+                  string.ascii_uppercase +
+                  string.digits) 
+                  for _ in range(4))
+
+      # Not Doing Hashes for Demos since Mining takes too long
+      # shaAns.update(answer)
+      # answer = shaAns.hexdigest()
+
+      # print challenge + ": " + answer
+      if answer == challenge : 
+        found = True
+        print str(informationMiner['miner_address']) + "has mined a coin"
+
     # Once we find a valid proof of work,
     # we know we can mine a block so 
     # we reward the miner by adding a transaction
@@ -68,7 +90,6 @@ def mine2():
     # Now we can gather the data needed
     # to create the new block
     new_block_data = {
-      "proof-of-work": proof,
       "transactions": list(this_nodes_transactions)
     }
     new_block_index = last_block.index + 1
