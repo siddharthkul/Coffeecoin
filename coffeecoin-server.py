@@ -52,7 +52,10 @@ def mine():
   informationMiner = request.get_json()
   answer = informationMiner['answer']
   print answer
-  return "Value received"
+  if(answer == challenge):
+    return "Value Correct"
+  else:
+    return "Value Incorrect"
   exit()
   '''
   # Debugging
