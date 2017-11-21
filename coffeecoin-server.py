@@ -50,24 +50,21 @@ shaAns = hashlib.sha256()
 @node.route('/mine', methods=['POST'])
 def mine():
   informationMiner = request.get_json()
-  answer = informationMiner['answer']
-  print answer
-  if(answer == challenge):
-    return "Value Correct"
-  else:
-    return "Value Incorrect"
-  exit()
-  '''
-  # Debugging
   miner_information_dict[informationMiner['miner_address']] = informationMiner
-  print "Miner " + str(informationMiner['miner_address']) + " now mining"
+  #print "Miner " + str(informationMiner['miner_address']) + " now mining"
+  answer = informationMiner['answer']
+  print str(answer) + " received from miner : " + str(informationMiner['miner_address']) + ", Checking correctness"
+
+  ############################################
+  # Debugging
   #print miner_information_dict
-  if(len(this_nodes_transactions) != 0):
+  if(len(this_nodes_transactions) != 0 and answer == challenge):
     # First find the Challenge
     # Not really using the difficulty level here at all, but leaving it for 
     # debugging and future use! 
     global challenge
     [challenge, d_level] = refresh_challenge(miner_information_dict)
+    print str(challenge) + " new challenge"
 
     # Give Blockchain Data
     last_block = blockchain[len(blockchain) - 1]
@@ -75,22 +72,6 @@ def mine():
     # Not Doing Hashes for Demos since Mining takes too long
     # shaCha.update(challenge)
     # challenge = shaCha.hexdigest()
-
-    # Now we can attempt to find the solution
-    found = False
-
-    while found == False : 
-      
-
-      # Not Doing Hashes for Demos since Mining takes too long
-      # shaAns.update(answer)
-      # answer = shaAns.hexdigest()
-
-      # print challenge + ": " + answer
-      if answer == challenge : 
-        found = True
-        print str(informationMiner['miner_address']) + "has mined a coin"
-
     # Once we find a valid proof of work,
     # we know we can mine a block so 
     # we reward the miner by adding a transaction
@@ -126,7 +107,8 @@ def mine():
   else:
     #print "Spam Miner"
     return "Try Again"
-  '''
+  
+  ############################################
 
 # Get Challenge
 @node.route('/info', methods=['POST'])
