@@ -43,12 +43,14 @@ def refresh_challenge(peer_nodes):
 		challenge+='0'
 
 	# Generate the 16 byte string that will function as the target
+	global difficulty_level
 	answer = ''.join(random.choice(string.ascii_lowercase +
 									string.ascii_uppercase +
 									string.digits) 
 									for _ in range(4-difficulty_level))
 
 	challenge+=answer
+	global difficulty_level
 	return challenge, difficulty_level
 
 
@@ -74,12 +76,14 @@ def diff_level(peer_nodes):
 		if (tot_gpu + tot_cpu > 2*(known_gpu + known_cpu)):
 			global known_gpu
 			global known_cpu
+			global difficulty_level
 			difficulty_level+=1
 			known_gpu = tot_gpu
 			known_cpu = tot_cpu
 
 		# In the case where CPU and GPU have halved
 		if (tot_gpu + tot_cpu < 2*(known_gpu + known_cpu)):
+			global difficulty_level
 			difficulty_level-=1
 			known_gpu = tot_gpu
 			known_cpu = tot_cpu
