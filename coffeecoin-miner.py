@@ -5,6 +5,7 @@ import urllib
 import urllib2
 from random import randint
 import platform, subprocess, os
+import random, hashlib, string
 
 def detectCPUs():
  """
@@ -26,6 +27,25 @@ def detectCPUs():
              return ncpus
  return 1 # Default
 
+def solveHash(challenge):
+    # Now we can attempt to find the solution
+    ping_index = 0
+    found = False
+    while found == False : 
+        ping_index += 1
+        answer = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits)for _ in range(4))
+        if ping_index == 1000000 :
+            ping_index = 0
+            req2 = urllib2.Request("http://localhost:5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : miner.miner_coins_earned , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
+            response2 = urllib2.urlopen(req2)
+            challenge = response2.read()
+            print challenge
+        if answer == challenge : 
+            found = True
+            print str(miner.miner_address) + " has mined a coin"
+            return answer
+            
+
 class Miner:
     def __init__(self,  miner_cpu, miner_gpu):
         #self.miner_address = uuid.uuid4()
@@ -41,14 +61,19 @@ miner = Miner(
 
 try:
     while True:
-        req = urllib2.Request("http://localhost:5000/mine", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : miner.miner_coins_earned , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu }), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
+        req = urllib2.Request("http://localhost:5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : miner.miner_coins_earned , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
         response = urllib2.urlopen(req)
-        the_page = response.read()
-        if(the_page != "Try Again"):
-            print the_page
+        challenge = response.read()
+        print challenge
+        my_answer = solveHash(challenge)
+        req3 = urllib2.Request("http://localhost:5000/mine", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : miner.miner_coins_earned , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu , 'answer' : my_answer}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
+        response3 = urllib2.urlopen(req3)
+        the_page3 = response3.read()
+        if(the_page3 != "Try Again"):
+            print the_page3
             miner.miner_coins_earned += 1
         else:
             print "Trying Again"
-        time.sleep(1)
+        
 except KeyboardInterrupt:
     print('interrupted!')
