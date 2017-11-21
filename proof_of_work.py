@@ -17,8 +17,12 @@ def init_challenge(peer_nodes):
 
 	# There is not point if the Server has not detected any nodes as 
 	# of now 
-	if (len(peer_nodes) == 0): 
-		return
+	if (len(peer_nodes) == 0):
+		answer = ''.join(random.choice(string.ascii_lowercase +
+									string.ascii_uppercase +
+									string.digits) 
+									for _ in range(4)) 
+		return answer 
 	
 	tot_gpu = 0
 	tot_cpu = 0
@@ -29,6 +33,13 @@ def init_challenge(peer_nodes):
 	if (tot_gpu + tot_cpu > known_gpu + known_cpu):
 		known_gpu = tot_gpu
 		known_cpu = tot_cpu
+
+	answer = ''.join(random.choice(string.ascii_lowercase +
+									string.ascii_uppercase +
+									string.digits) 
+									for _ in range(4))
+	return answer
+
 
 # Function to refresh the Challenge String
 def refresh_challenge(peer_nodes): 
