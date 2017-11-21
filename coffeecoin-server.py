@@ -43,8 +43,8 @@ def transaction():
   # Then we let the client know it worked out
   return "Transaction submission successful\n"
 
-shaCha = hashlib.sha256()
-shaAns = hashlib.sha256()
+# shaCha = hashlib.sha256()
+# shaAns = hashlib.sha256()
 
 # New Miner Method
 @node.route('/mine', methods=['POST'])
