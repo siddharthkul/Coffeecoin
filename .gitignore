@@ -1,2 +1,6 @@
 # Ignore all .pyc
 *.pyc
+
+.DS_Store
+
+diddharth_example_code.py
