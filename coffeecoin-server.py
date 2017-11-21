@@ -24,6 +24,9 @@ this_nodes_transactions = []
 # Dictionary of Miner Information
 miner_information_dict = {}
 
+#global variable challenge 
+challenge = init_challenge(miner_information_dict)
+
 @node.route('/txion', methods=['POST'])
 def transaction():
   # On each new POST request,
@@ -47,13 +50,20 @@ shaAns = hashlib.sha256()
 @node.route('/mine', methods=['POST'])
 def mine():
   informationMiner = request.get_json()
+  answer = informationMiner['answer']
+  print answer
+  return "Value received"
+  exit()
+  '''
   # Debugging
   miner_information_dict[informationMiner['miner_address']] = informationMiner
+  print "Miner " + str(informationMiner['miner_address']) + " now mining"
   #print miner_information_dict
   if(len(this_nodes_transactions) != 0):
     # First find the Challenge
     # Not really using the difficulty level here at all, but leaving it for 
     # debugging and future use! 
+    global challenge
     [challenge, d_level] = refresh_challenge(miner_information_dict)
 
     # Give Blockchain Data
@@ -67,10 +77,7 @@ def mine():
     found = False
 
     while found == False : 
-      answer = ''.join(random.choice(string.ascii_lowercase +
-                  string.ascii_uppercase +
-                  string.digits) 
-                  for _ in range(4))
+      
 
       # Not Doing Hashes for Demos since Mining takes too long
       # shaAns.update(answer)
@@ -116,6 +123,14 @@ def mine():
   else:
     #print "Spam Miner"
     return "Try Again"
+  '''
+
+# Get Challenge
+@node.route('/info', methods=['POST'])
+def get_info():
+  informationMiner = request.get_json()
+  miner_information_dict[informationMiner['miner_address']] = informationMiner
+  return challenge
   
 
 # Internal Blocks Method
