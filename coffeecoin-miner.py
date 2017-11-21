@@ -42,7 +42,7 @@ def solveHash(challenge):
             print challenge
         if answer == challenge : 
             found = True
-            print str(miner.miner_address) + " has mined a coin"
+            #print str(miner.miner_address) + " has mined a coin"
             return answer
             
 
