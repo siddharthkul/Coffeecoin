@@ -83,7 +83,6 @@ def diff_level(peer_nodes):
 			tot_cpu += peer_nodes[key]['miner_cpu']
 
 		#In the case where the CPU and GPU has doubled 
-		
 		if (tot_gpu + tot_cpu > 2*(known_gpu + known_cpu)):
 			global known_gpu
 			global known_cpu
