@@ -22,6 +22,16 @@ class Card:
 @node.route('/miner_data', methods=['POST'])
 def get_data(): 
 	miner_data = request.get_json()
+	prob_model(miner_data)
+	try:
+	    req = urllib2.Request(“http://localhost:5000/mine2“, json.dumps({‘address’ : miner.miner_address}), headers={‘Content-type’: ‘application/json’, ‘Accept’: ‘application/json’})
+	    response = urllib2.urlopen(req)
+	    the_page = response.read()
+	    print the_page
+	    time.sleep(1)
+	except KeyboardInterrupt:
+    	print(‘interrupted!’)
+
 
 # Sorts and chooses two miners randomly from the deck 
 def deck_chooser():
@@ -70,15 +80,3 @@ def prob_model(miner_data):
 			known_number = len(miner_data)
 			# Call the function to sort the deck and choose two events (prev_i is set here)
 			deck_chooser(deck)
-
-
-# Transactions will be filed all the time
-try:
-    while True:
-        req = urllib2.Request(“http://localhost:5000/mine2“, json.dumps({‘address’ : miner.miner_address}), headers={‘Content-type’: ‘application/json’, ‘Accept’: ‘application/json’})
-        response = urllib2.urlopen(req)
-        the_page = response.read()
-        print the_page
-        time.sleep(1)
-except KeyboardInterrupt:
-    print(‘interrupted!’)
