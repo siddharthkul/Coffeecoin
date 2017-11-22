@@ -16,6 +16,6 @@ try:
         print "Miner# \t Coins Earned"
         for i in d:
             print str(d[i]['miner_address']) + "\t\t" + str(d[i]['coins_earned'])
-        time.sleep(1) 
+        time.sleep(5) 
 except KeyboardInterrupt:
     print('interrupted!')
