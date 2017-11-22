@@ -167,5 +167,5 @@ def print_blocks():
       blocklist =  blocklist + assembled
   return blocklist
 
-node.run(threaded=True)
+node.run(threaded=True, host='0.0.0.0')
 
