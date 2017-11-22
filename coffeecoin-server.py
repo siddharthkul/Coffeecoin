@@ -116,6 +116,10 @@ def get_info():
   informationMiner = request.get_json()
   miner_information_dict[informationMiner['miner_address']] = informationMiner
   return challenge
+
+@node.route('/board', methods=['POST'])
+def board():
+  return json.dumps(miner_information_dict)
   
 
 # Internal Blocks Method
