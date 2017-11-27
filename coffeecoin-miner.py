@@ -7,6 +7,7 @@ from random import randint
 import platform, subprocess, os
 import random, hashlib, string
 
+# Function to Detect CPU
 def detectCPUs():
  """
  Detects the number of CPUs on a system.
@@ -27,6 +28,7 @@ def detectCPUs():
              return ncpus
  return 1 # Default
 
+# Function to solve Hash Challenge
 def solveHash(challenge):
     # Now we can attempt to find the solution
     ping_index = 0
@@ -45,7 +47,7 @@ def solveHash(challenge):
             #print str(miner.miner_address) + " has mined a coin"
             return answer
             
-
+# Define Class
 class Miner:
     def __init__(self, miner_name,  miner_cpu, miner_gpu):
         #self.miner_address = uuid.uuid4()
@@ -55,6 +57,7 @@ class Miner:
         self.miner_cpu = miner_cpu
         self.miner_gpu = miner_gpu
 
+# Get miner name        
 name_case = False
 while(name_case == False):
     name = raw_input('\nPlease input miner name(length more than 8 and less than 11) - ')
@@ -65,8 +68,9 @@ while(name_case == False):
     if(len(name)>7 and len(name)<11):
         name_case = True
 
-print(name)
+#print(name)
 
+# Miner Class Constructor
 miner = Miner(
     name,
     detectCPUs(),
