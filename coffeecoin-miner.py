@@ -36,7 +36,7 @@ def solveHash(challenge):
         answer = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits)for _ in range(4))
         if ping_index == 1000000 :
             ping_index = 0
-            req2 = urllib2.Request("http://localhost:5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : miner.miner_coins_earned , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
+            req2 = urllib2.Request("http://10.0.0.70:5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : miner.miner_coins_earned , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
             response2 = urllib2.urlopen(req2)
             challenge = response2.read()
             print challenge
@@ -61,12 +61,12 @@ miner = Miner(
 
 try:
     while True:
-        req = urllib2.Request("http://localhost:5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : miner.miner_coins_earned , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
+        req = urllib2.Request("http://10.0.0.70:5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : miner.miner_coins_earned , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
         response = urllib2.urlopen(req)
         challenge = response.read()
         print challenge
         my_answer = solveHash(challenge)
-        req3 = urllib2.Request("http://localhost:5000/mine", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : miner.miner_coins_earned , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu , 'answer' : my_answer}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
+        req3 = urllib2.Request("http://10.0.0.70:5000/mine", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : miner.miner_coins_earned , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu , 'answer' : my_answer}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
         response3 = urllib2.urlopen(req3)
         the_page3 = response3.read()
         if(the_page3 != "Try Again"):
