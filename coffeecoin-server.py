@@ -1,5 +1,4 @@
 # This is the main file for Coffee Coin Experimentation
-# Originally adapted from [https://gist.github.com/aunyks/47d157f8bc7d1829a729c2a6a919c173]
 # Authored by Siddharth Kulkarni and Sharan Duggirala November 18th, 2017
 
 # Imports
