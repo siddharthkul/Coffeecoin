@@ -173,5 +173,6 @@ def print_blocks():
       blocklist =  blocklist + assembled
   return blocklist
 
+# Start server
 node.run(threaded=True, host='0.0.0.0')
 
