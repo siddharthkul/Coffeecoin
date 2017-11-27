@@ -47,14 +47,28 @@ def solveHash(challenge):
             
 
 class Miner:
-    def __init__(self,  miner_cpu, miner_gpu):
+    def __init__(self, miner_name,  miner_cpu, miner_gpu):
         #self.miner_address = uuid.uuid4()
-        self.miner_address = randint(0,1000)
+        #self.miner_address = randint(0,1000)
+        self.miner_address = miner_name
         self.miner_coins_earned = 0
         self.miner_cpu = miner_cpu
         self.miner_gpu = miner_gpu
 
+name_case = False
+while(name_case == False):
+    name = raw_input('\nPlease input miner name(length more than 8 and less than 11) - ')
+    if(len(name)>10):
+        print('Length should be less than 11')
+    if(len(name)<8):
+        print('Length should be more than 8')
+    if(len(name)>7 and len(name)<11):
+        name_case = True
+
+print(name)
+
 miner = Miner(
+    name,
     detectCPUs(),
     4 ** detectCPUs()
 )
