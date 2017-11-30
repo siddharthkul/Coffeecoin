@@ -50,15 +50,19 @@ def refresh_challenge(peer_nodes):
 	challenge = ''
 
 	# Add the Required Number of 0s from the Difficulty Level
-	for i in range(difficulty_level):
-		challenge+='0'
+#	for i in range(difficulty_level):
+#		challenge+='0'
 
 	# Generate the 16 byte string that will function as the target
 	global difficulty_level
+	# answer = ''.join(random.choice(string.ascii_lowercase +
+	# 								string.ascii_uppercase +
+	# 								string.digits) 
+	# 								for _ in range(4-difficulty_level))
 	answer = ''.join(random.choice(string.ascii_lowercase +
 									string.ascii_uppercase +
 									string.digits) 
-									for _ in range(4-difficulty_level))
+									for _ in range(4))
 
 	challenge+=answer
 	global difficulty_level

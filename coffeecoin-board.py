@@ -16,7 +16,7 @@ try:
         print "\n\tLEADERBOARD"
         print "\t-----------"
         print "Miner# \t\t Coins Earned\n"
-        print "-----\t\t------------"
+        print "------\t\t ------------"
         for i in d:
             print str(d[i]['miner_address']) + "\t\t" + str(d[i]['coins_earned']) + " ",
             for x in range(0, d[i]['coins_earned']):
