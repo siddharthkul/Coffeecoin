@@ -38,7 +38,7 @@ def solveHash(challenge):
         answer = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits)for _ in range(4))
         if ping_index == 1000000 :
             ping_index = 0
-            req2 = urllib2.Request("http://"+ip_address+":5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : miner.miner_coins_earned , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
+            req2 = urllib2.Request("http://localhost:5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : miner.miner_coins_earned , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
             response2 = urllib2.urlopen(req2)
             challenge = response2.read()
             print challenge
@@ -49,15 +49,16 @@ def solveHash(challenge):
             
 # Define Class
 class Miner:
-    def __init__(self, miner_name,  miner_cpu, miner_gpu):
+    def __init__(self,  miner_cpu, miner_gpu):
         #self.miner_address = uuid.uuid4()
-        #self.miner_address = randint(0,1000)
-        self.miner_address = miner_name
+        self.miner_address = randint(0,1000)
+        #self.miner_address = miner_name
         self.miner_coins_earned = 0
         self.miner_cpu = miner_cpu
         self.miner_gpu = miner_gpu
 
 # Get miner name        
+'''
 name_case = False
 while(name_case == False):
     name = raw_input('\nPlease input miner name(length more than 8 and less than 11) - ')
@@ -67,26 +68,27 @@ while(name_case == False):
         print('Length should be more than 8')
     if(len(name)>7 and len(name)<11):
         name_case = True
-#print(name)
 
-ip_address = raw_input('\nEnter Server IP address to connect to : ')
+#print(name)
+'''
+#ip_address = raw_input('\nEnter Server IP address to connect to : ')
 #print(ip_address)
 
 # Miner Class Constructor
 miner = Miner(
-    name,
+    #name,
     detectCPUs(),
     4 ** detectCPUs()
 )
 
 try:
     while True:
-        req = urllib2.Request("http://"+ip_address+":5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : miner.miner_coins_earned , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
+        req = urllib2.Request("http://localhost:5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : miner.miner_coins_earned , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
         response = urllib2.urlopen(req)
         challenge = response.read()
         print challenge
         my_answer = solveHash(challenge)
-        req3 = urllib2.Request("http://"+ip_address+":5000/mine", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : miner.miner_coins_earned , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu , 'answer' : my_answer}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
+        req3 = urllib2.Request("http://localhost:5000/mine", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : miner.miner_coins_earned , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu , 'answer' : my_answer}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
         response3 = urllib2.urlopen(req3)
         the_page3 = response3.read()
         if(the_page3 != "Try Again"):
