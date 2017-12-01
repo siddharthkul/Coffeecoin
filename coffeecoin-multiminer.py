@@ -51,6 +51,9 @@ class Miner:
         self.miner_cpu = miner_cpu
         self.miner_gpu = miner_gpu
         self.miner_threads = miner_threads
+        self.hashrate = 0
+        self.efficiency = 0
+        self.profitability = 0
 
 # Miner Class Constructor
 miner = Miner(
@@ -65,7 +68,9 @@ def spawn(num, v):
     # print(miner.miner_coins_earned)
 
     #get Challenge
-    req = urllib2.Request("http://localhost:5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : v.value , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu, 'miner_threads' : miner.miner_threads}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
+    req = urllib2.Request("http://localhost:5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : v.value , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu, 'miner_threads' : miner.miner_threads, 'hashrate': miner.hashrate,
+                'efficiency': miner.efficiency,
+                'profitability': miner.profitability}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
     response = urllib2.urlopen(req)
     challenge = response.read()
     #print challenge
@@ -81,7 +86,9 @@ def spawn(num, v):
         if ping_index == 1000000 :
             #print("updating")
             ping_index = 0
-            req2 = urllib2.Request("http://localhost:5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : v.value , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu , 'miner_threads' : miner.miner_threads}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
+            req2 = urllib2.Request("http://localhost:5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : v.value , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu , 'miner_threads' : miner.miner_threads ,'hashrate': miner.hashrate,
+                'efficiency': miner.efficiency,
+                'profitability': miner.profitability}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
             response2 = urllib2.urlopen(req2)
             challenge = response2.read()
             print challenge
@@ -90,7 +97,9 @@ def spawn(num, v):
             my_answer = answer
             found = True
             #print str(miner.miner_address) + " has mined a coin"
-    req3 = urllib2.Request("http://localhost:5000/mine", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : v.value , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu , 'miner_threads' : miner.miner_threads, 'answer' : my_answer}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
+    req3 = urllib2.Request("http://localhost:5000/mine", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : v.value , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu , 'miner_threads' : miner.miner_threads, 'hashrate': miner.hashrate,
+                'efficiency': miner.efficiency,
+                'profitability': miner.profitability ,'answer' : my_answer}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
     response3 = urllib2.urlopen(req3)
     the_page3 = response3.read()
     if(the_page3 != "Try Again"):
