@@ -96,6 +96,7 @@ def spawn(num, v):
     if(the_page3 != "Try Again"):
         print the_page3
         v.value+=1
+        #print("Miner coins: "+str(v.value))
         #miner.miner_coins_earned += 1
         #print("Coins earned " + str(miner.miner_coins_earned))
     else:
