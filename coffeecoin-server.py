@@ -12,6 +12,8 @@ from txion import *
 from proof_of_work import * 
 import random
 import hashlib
+from datetime import datetime
+from math import pow
 
 # Ignore all Warnings for demo (Please comment out otherwise)
 import warnings
@@ -29,6 +31,53 @@ miner_information_dict = {}
 
 # Global variable challenge initialization
 challenge = init_challenge(miner_information_dict)
+
+# To Calculate the Energy Efficiency Timing is essential
+startTime= datetime.now()
+timeElapsed = 0
+
+# Global Initializations to calculate the energy efficiency
+# Please change according to the country and situation
+rewardPerMine = 1
+# This is the electricity cost in San Jose State currently
+electricityCost = 0.189
+# For the purpose of our experiment and demo efficiency, we
+# have set the d_f to 1
+difficultyLevel  = 1
+# The average power consumption of a laptop is around 12W
+powerConsumption = 0.012
+# The exchange price of a coffeecoin is 1 Dollar
+exchangeRate = 1
+
+#############################################################################################################
+
+def end_sequence():
+
+  for key in miner_information_dict:
+    # Need to calculate the Hash Rate First
+    global timeElapsed
+    coins_earned = miner_information_dict[key]['coins_earned']
+    hashrate = (pow(2,32)*coins_earned)/(timeElapsed.total_seconds())
+    miner_information_dict[key]['hashrate'] = hashrate
+
+    #Calculate the Left side of the Power Efficiency
+    global powerConsumption
+    leftEquation = hashrate/powerConsumption
+    miner_information_dict[key]['efficiency'] =leftEquation
+
+    # Calculate the Right side of the Power Efficiency
+    global rewardPerMine
+    global electricityCost
+    global difficultyLevel
+    global exchangeRate
+    rightEquation = (electricityCost*
+          difficultyLevel)/(rewardPerMine*exchangeRate)
+
+    # Determine if the System is Profitable
+    if leftEquation > rightEquation:
+      miner_information_dict[key]['profitability'] = 1
+
+  print miner_information_dict
 
 #############################################################################################################
 
