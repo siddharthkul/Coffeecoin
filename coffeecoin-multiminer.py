@@ -75,7 +75,7 @@ def spawn(num, v):
     ping_index = 0
     found = False
     while found == False : 
-       #print("finding")
+        #print("finding")
         ping_index += 1
         answer = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits)for _ in range(4))
         if ping_index == 1000000 :
@@ -96,6 +96,7 @@ def spawn(num, v):
     if(the_page3 != "Try Again"):
         print the_page3
         v.value+=1
+        #print("Miner coins: "+str(v.value))
         #miner.miner_coins_earned += 1
         #print("Coins earned " + str(miner.miner_coins_earned))
     else:
