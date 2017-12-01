@@ -18,7 +18,7 @@ try:
         print "Miner# \t\t Efficiency \t\t Coins Earned\n"
         print "------\t\t ----------- \t\t ------------"
         for i in d:
-            print str(d[i]['miner_address']) + "\t\t\t" + str(d[i]['coins_earned']) + "\t\t\t" +  str(d[i]['efficiency']) + " ",
+            print str(d[i]['miner_address']) + "\t\t\t" + str(d[i]['efficiency']) + "\t\t\t" +  str(d[i]['coins_earned']) + " ",
             for x in range(0, d[i]['coins_earned']):
                 print u"\u25A0",
             print " "
