@@ -8,6 +8,17 @@ import urllib2
 from random import randint
 import platform, subprocess, os
 import random, hashlib, string
+import sys
+
+args_passed = False
+
+if(len(sys.argv)-1 == 0):
+    print("No args passed")
+    args_passed = True
+
+if(args_passed):
+    sys.exit([arg])
+    
 
 # Function to Detect CPU
 def detectCPUs():
@@ -32,17 +43,18 @@ def detectCPUs():
 
 # Define Class
 class Miner:
-    def __init__(self,  miner_cpu, miner_gpu):
+    def __init__(self, miner_threads,  miner_cpu, miner_gpu):
         #self.miner_address = uuid.uuid4()
         self.miner_address = randint(0,1000)
         #self.miner_address = miner_name
         self.miner_coins_earned = 0
         self.miner_cpu = miner_cpu
         self.miner_gpu = miner_gpu
+        self.miner_threads = miner_threads
 
 # Miner Class Constructor
 miner = Miner(
-    #name,
+    sys.argv[1],
     detectCPUs(),
     4 ** detectCPUs()
 )
@@ -72,7 +84,7 @@ def spawn(num, v):
             req2 = urllib2.Request("http://localhost:5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : v.value , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
             response2 = urllib2.urlopen(req2)
             challenge = response2.read()
-            #print challenge
+            print challenge
         if answer == challenge : 
             print("Found")
             my_answer = answer
@@ -91,7 +103,7 @@ def spawn(num, v):
 
 if __name__ == '__main__':
     v = multiprocessing.Value('i', 0)
-    for i in range(8):
+    for i in range(int(sys.argv[1])):
         p = multiprocessing.Process(target=spawn, args=(i,v))
         p.start()
         #p.join() #- one after the other, but we want parallel
