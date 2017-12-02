@@ -13,17 +13,20 @@ known_cpu = 0
 known_gpu = 0
 
 # Function to Initialize the Challenge String
-def init_challenge(peer_nodes):
+def init_challenge(peer_nodes, h):
 
 	# There is not point if the Server has not detected any nodes as 
 	# of now 
 	if (len(peer_nodes) == 0):
-		answer = ''.join(random.choice(string.ascii_lowercase +
-									string.ascii_uppercase +
-									string.digits) 
-									for _ in range(4)) 
+		answer = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(4)) 
+		if(h == str(0)):
+			answer = hashlib.md5(answer).hexdigest()[:4]
+		elif(h == str(1)):
+			answer = hashlib.sha1(answer).hexdigest()[:4]
+		elif(h == str(2)):
+			answer = hashlib.sha256(answer).hexdigest()[:4]
 		return answer 
-	
+
 	tot_gpu = 0
 	tot_cpu = 0
 	# Need to initialize the Known CPU and GPU values to start with 
@@ -42,7 +45,7 @@ def init_challenge(peer_nodes):
 
 
 # Function to refresh the Challenge String
-def refresh_challenge(peer_nodes): 
+def refresh_challenge(peer_nodes, h):
 
 	# Need to Discover the Known CPU and GPU values to start with 
 	diff_level(peer_nodes)
@@ -59,6 +62,12 @@ def refresh_challenge(peer_nodes):
 	 								string.ascii_uppercase +
 	 								string.digits) 
 	 								for _ in range(4-difficulty_level))
+	if(h == str(0)):
+			answer = hashlib.md5(answer).hexdigest()[:4]
+	elif(h == str(1)):
+			answer = hashlib.sha1(answer).hexdigest()[:4]
+	elif(h == str(2)):
+			answer = hashlib.sha256(answer).hexdigest()[:4]
 
 	challenge+=answer
 	global difficulty_level

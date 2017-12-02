@@ -14,6 +14,18 @@ import random
 import hashlib
 from datetime import datetime
 from math import pow
+import sys
+
+args_passed = False
+
+if(len(sys.argv)-1 == 0):
+    print("No args passed")
+    args_passed = True
+
+if(args_passed):
+    sys.exit([arg])
+
+h = sys.argv[1]
 
 # Ignore all Warnings for demo (Please comment out otherwise)
 import warnings
@@ -30,7 +42,7 @@ this_nodes_transactions = []
 miner_information_dict = {}
 
 # Global variable challenge initialization
-challenge = init_challenge(miner_information_dict)
+challenge = init_challenge(miner_information_dict, h)
 
 # To Calculate the Energy Efficiency Timing is essential
 startTime= datetime.now()
@@ -122,7 +134,7 @@ def mine():
 
     # Create a new global challenge, since challenge has already been solved
     global challenge
-    [challenge, d_level] = refresh_challenge(miner_information_dict)
+    [challenge, d_level] = refresh_challenge(miner_information_dict, h)
     print str(challenge) + " new challenge"
 
     # Add the transaction where this server has given a coin to the miner
