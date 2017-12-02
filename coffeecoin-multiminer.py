@@ -100,7 +100,6 @@ def spawn(num, v, h):
             answer = hashlib.sha256(answer).hexdigest()[:4]
         else:
             exit(0)
-        print(answer)
         if ping_index == 1000000 :
             #print("updating")
             ping_index = 0
