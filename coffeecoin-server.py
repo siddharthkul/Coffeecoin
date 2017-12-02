@@ -15,6 +15,7 @@ import hashlib
 from datetime import datetime
 from math import pow
 import sys
+import atexit
 
 args_passed = False
 
@@ -233,6 +234,14 @@ def print_blocks():
       blocklist =  blocklist + assembled
   return blocklist
 
+def exit_handler():
+    print 'My application is ending!'
+    with open('file.txt','w') as file:
+      file.write(json.dumps(miner_information_dict))
+
+atexit.register(exit_handler)
+
 # Start server
 node.run(threaded=True, host='0.0.0.0')
+
 
