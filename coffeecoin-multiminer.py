@@ -12,13 +12,18 @@ import sys
 
 args_passed = False
 
-if(len(sys.argv)-1 == 0):
-    print("No args passed")
+if(len(sys.argv)-2 == 0):
+    print("Need 2 args")
     args_passed = True
 
 if(args_passed):
-    sys.exit([arg])
-    
+    sys.exit()
+
+# First args is number of processes
+# Second arg is hash function to use
+    # 0 - md5
+    # 1 - sha1
+    # 2 - sha2
 
 # Function to Detect CPU
 def detectCPUs():
@@ -62,7 +67,8 @@ miner = Miner(
     4 ** detectCPUs()
 )
 
-def spawn(num, v):
+def spawn(num, v, h):
+
     # print("received " + str(v.value))
     # v.value+=1
     # print(miner.miner_coins_earned)
@@ -83,6 +89,18 @@ def spawn(num, v):
         #print("finding")
         ping_index += 1
         answer = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits)for _ in range(4))
+        if(h == str(0)):
+            #print("md5")
+            answer = hashlib.md5(answer).hexdigest()[:4]
+        elif(h == str(1)):
+            #print("sha1")
+            answer = hashlib.sha1(answer).hexdigest()[:4]
+        elif(h == str(2)):
+            #print("sha256")
+            answer = hashlib.sha256(answer).hexdigest()[:4]
+        else:
+            exit(0)
+        print(answer)
         if ping_index == 1000000 :
             #print("updating")
             ping_index = 0
@@ -114,6 +132,6 @@ def spawn(num, v):
 if __name__ == '__main__':
     v = multiprocessing.Value('i', 0)
     for i in range(int(sys.argv[1])):
-        p = multiprocessing.Process(target=spawn, args=(i,v))
+        p = multiprocessing.Process(target=spawn, args=(i,v, sys.argv[2]))
         p.start()
         #p.join() #- one after the other, but we want parallel
