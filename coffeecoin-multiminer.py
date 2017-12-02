@@ -70,11 +70,11 @@ miner = Miner(
 def spawn(num, v, h):
 
     # print("received " + str(v.value))
-    # v.value+=1
+    # v.value+=1s
     # print(miner.miner_coins_earned)
 
     #get Challenge
-    req = urllib2.Request("http://localhost:5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : v.value , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu, 'miner_threads' : miner.miner_threads, 'hashrate': miner.hashrate,
+    req = urllib2.Request("http://10.0.0.70:5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : v.value , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu, 'miner_threads' : miner.miner_threads, 'hashrate': miner.hashrate,
                 'efficiency': miner.efficiency,
                 'profitability': miner.profitability}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
     response = urllib2.urlopen(req)
@@ -103,7 +103,7 @@ def spawn(num, v, h):
         if ping_index == 1000000 :
             #print("updating")
             ping_index = 0
-            req2 = urllib2.Request("http://localhost:5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : v.value , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu , 'miner_threads' : miner.miner_threads ,'hashrate': miner.hashrate,
+            req2 = urllib2.Request("http://10.0.0.70:5000/info", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : v.value , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu , 'miner_threads' : miner.miner_threads ,'hashrate': miner.hashrate,
                 'efficiency': miner.efficiency,
                 'profitability': miner.profitability}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
             response2 = urllib2.urlopen(req2)
@@ -114,7 +114,7 @@ def spawn(num, v, h):
             my_answer = answer
             found = True
             #print str(miner.miner_address) + " has mined a coin"
-    req3 = urllib2.Request("http://localhost:5000/mine", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : v.value , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu , 'miner_threads' : miner.miner_threads, 'hashrate': miner.hashrate,
+    req3 = urllib2.Request("http://10.0.0.70:5000/mine", json.dumps({ 'miner_address' : miner.miner_address, 'coins_earned' : v.value , 'miner_cpu' : miner.miner_cpu, 'miner_gpu' : miner.miner_gpu , 'miner_threads' : miner.miner_threads, 'hashrate': miner.hashrate,
                 'efficiency': miner.efficiency,
                 'profitability': miner.profitability ,'answer' : my_answer}), headers={'Content-type': 'application/json', 'Accept': 'application/json'})
     response3 = urllib2.urlopen(req3)
