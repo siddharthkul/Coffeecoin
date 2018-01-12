@@ -1,16 +1,10 @@
 # Coffee Coin
 
-Energy Efficient Blockchain miner built by Sharan Duggirala and Siddharth Kulkarni of the Department of Computer Science in San Jose State University. 
-
-We called this coffee coin, since both of us required a fair bit of coffee to get this code up and running. 
-
-# Coffee Coin
-
 ![N|Solid](http://www.paperboardpackaging.org/images/default-source/School-Logos/sjsu-primary-mark_web.png?sfvrsn=0)
 
 >“Bitcoin gives us, for the first time, a way for one Internet user to transfer a unique piece of digital property to another Internet user, such that the transfer is guaranteed to be safe and secure, everyone knows that the transfer has taken place, and nobody can challenge the legitimacy of the transfer. The consequences of this breakthrough are hard to overstate.” - **Marc Andreesen**
 
-Energy Efficient Blockchain Simulator for Research started by Sharan Duggirala and Siddharth Kulkarni of the Department of Computer Science in San Jose State University. This is a fork of the original collaboration, that I intend to work on personally and/or other open source contributors. This project is intended for three different sets of people: 
+Energy Efficient Blockchain Simulator for Research started by Sharan Duggirala and Siddharth Kulkarni of the Department of Computer Science in San Jose State University. This project is intended for three different sets of people: 
 
   - People curious about the performance of their own computer when mining on a simulated network.
   - People who want to **investigate** the change of certain conditions and the respective resulting change in miner efficiency. In fact our **research** results are briefly displayed in this documentation and further elaborated on in the two PDFs within the repository.  
@@ -56,11 +50,6 @@ The project is divided into sections according to the division of the **Python**
 
 For an in-depth understanding of the various Python files within CoffeeCoin please refer to the *BlockchainEnergyEfficiciency.pdf*, titled **Randomized  Approach  to  Finding  the  Optimal  Blockchain  Miner Configurations  for  Maximum  Energy  Efficiency**. Furthermore, to understand the literature survey that has taken place in order to create this entire project, please refer to the *Energy_Efficiency_Survey.pdf*, titled **A Literature Survey of Energy Efficiency Within Blockchain Networks**. Both these documents are available within the repository, and we recommend at least a cursory glance through the first one. 
  
-### Todos
-
- - Write more tests
- - Start building a UI
-
 ![Coffee](https://cdn.pixabay.com/photo/2017/08/07/22/57/coffee-2608864_1280.jpg)
 
 License
